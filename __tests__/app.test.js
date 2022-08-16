@@ -39,7 +39,7 @@ describe('backend-express-template routes', () => {
     });
   });
 
-  it.skip('signs in existing user', async () => {
+  it('signs in existing user', async () => {
     await request(app).post('/api/v1/users').send(mockUser);
     const res = await request(app)
       .post('/api/v1/users/sessions')
