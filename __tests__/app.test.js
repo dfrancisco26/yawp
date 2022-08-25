@@ -11,17 +11,17 @@ const mockUser = {
   password: 'running4ever'
 };
 
-// const registerAndLogin = async (userProps = {}) => {
-//   const password = userProps.password ?? mockUser.password;
+const registerAndLogin = async (userProps = {}) => {
+  const password = userProps.password ?? mockUser.password;
 
-//   const agent = request.agent(app);
+  const agent = request.agent(app);
 
-//   const user = await UserService.create({ ...mockUser, ...userProps });
+  const user = await UserService.create({ ...mockUser, ...userProps });
 
-//   const { email } = user;
-//   await agent.post('/api/v1/users/sessions').send({ email, password });
-//   return [agent, user];
-// };
+  const { email } = user;
+  await agent.post('/api/v1/users/sessions').send({ email, password });
+  return [agent, user];
+};
 
 describe('backend-express-template routes', () => {
   beforeEach(() => {
@@ -47,6 +47,17 @@ describe('backend-express-template routes', () => {
     expect(res.status).toEqual(200);
   });
 
+  it('returns a 403 when user signs in with invalid credentials', async () => {
+    const [agent] = await registerAndLogin();
+    const res = await agent.get('/api/v1/users');
+    expect(res.status).toEqual(403);
+  });
+
+  it('returns a list of users IF authorized', async() => {
+    const [agent] = await registerAndLogin({ email: 'admin' });
+    const res = await agent.get('/api/v1/users');
+    expect(res.status).toEqual(200);
+  });
 
   afterAll(() => {
     pool.end();
