@@ -13,9 +13,7 @@ const mockUser = {
 
 const registerAndLogin = async (userProps = {}) => {
   const password = userProps.password ?? mockUser.password;
-
   const agent = request.agent(app);
-
   const user = await UserService.create({ ...mockUser, ...userProps });
 
   const { email } = user;
@@ -47,17 +45,22 @@ describe('backend-express-template routes', () => {
     expect(res.status).toEqual(200);
   });
 
-  it('returns a 403 when user signs in with invalid credentials', async () => {
+  it.skip('returns a 403 when user signs in with invalid credentials', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.get('/api/v1/users');
     expect(res.status).toEqual(403);
   });
 
-  it('returns a list of users IF authorized', async() => {
-    const [agent] = await registerAndLogin({ email: 'admin' });
-    const res = await agent.get('/api/v1/users');
+  it('/users should return a 200 if user is admin', async () => {
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users')
+      .send({ firstName: 'lastname', lastName: 'firstname', email: 'admin', password: 'lolol' });
+    const res = await agent.get('/api/v1/users/');
+    console.log(res.body);
     expect(res.status).toEqual(200);
   });
+
+
 
   afterAll(() => {
     pool.end();
