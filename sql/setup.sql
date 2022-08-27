@@ -9,10 +9,10 @@ CREATE TABLE users (
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   email TEXT NOT NULL,
-  password TEXT NOT NULL
+  password_hash TEXT NOT NULL
 );
 
-INSERT INTO users (first_name, last_name, email, password) VALUES
+INSERT INTO users (first_name, last_name, email, password_hash) VALUES
   ('John', 'Doe', 'jdee@lol.com', '9b9a8scyvay98fga8yn7'),
   ('Jane', 'Doe', 'jaaanedoe@wiggle.com', '9b9aQIYUYOIQOUYXIOUAIHDjkf8yn7'),
   ('Woah', 'Big Sean', 'ididacollabwfob@gmail.com', 'whoooooo');

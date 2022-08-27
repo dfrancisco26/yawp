@@ -56,7 +56,6 @@ describe('backend-express-template routes', () => {
     await agent.post('/api/v1/users')
       .send({ firstName: 'lastname', lastName: 'firstname', email: 'admin', password: 'lolol' });
     const res = await agent.get('/api/v1/users/');
-    console.log(res.body);
     expect(res.status).toEqual(200);
   });
 
