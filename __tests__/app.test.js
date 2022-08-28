@@ -21,7 +21,7 @@ const registerAndLogin = async (userProps = {}) => {
   return [agent, user];
 };
 
-describe('backend-express-template routes', () => {
+describe('User routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
