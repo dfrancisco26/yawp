@@ -45,10 +45,10 @@ describe('User routes', () => {
     expect(res.status).toEqual(200);
   });
 
-  it.skip('returns a 403 when user signs in with invalid credentials', async () => {
+  it('only admin allowed to see list of users, this signs in without admin', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.get('/api/v1/users');
-    expect(res.status).toEqual(403);
+    expect(res.status).toEqual(401);
   });
 
   it('/users should return a 200 if user is admin', async () => {
